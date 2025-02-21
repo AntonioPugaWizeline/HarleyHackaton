@@ -1,0 +1,9 @@
+platform :ios, '14.0'
+
+target 'iosApp' do
+  use_frameworks!
+
+  # Uncomment if using Google Maps instead of MapKit
+  # pod 'GoogleMaps'
+  # pod 'GoogleMapsBase'
+end
