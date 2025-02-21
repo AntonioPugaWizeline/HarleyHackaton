@@ -1,3 +1,13 @@
+Please, notice that we you will need a Google map sdk key and a key from api.openrouteservice in order to make the demo work.
+Add google map SDK to metadata on AndroidManifest.xml and openrouteservice on NodeServer -> HarleyHackaton.js
+
+In case you need more instructions please, contact manuel.puga@wizeline.com or any participant of team 3.
+
+
+
+****************************************************************************************************************************************************************
+
+
 This is a Kotlin Multiplatform project targeting Android, iOS.
 
 * `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
