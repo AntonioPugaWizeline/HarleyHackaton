@@ -6,11 +6,14 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RouteResponse(
-    val initialPosition: Position,
-    val finalPosition: Position,
-    val motorcycleRoute: MotorcycleRoute,
-    var isOriginalRoute: Boolean = true
+    val initialPosition: Position = Position(0.0, 0.0),  // Example default value
+    val finalPosition: Position = Position(0.0, 0.0),
+    val motorcycleRoute: MotorcycleRoute = MotorcycleRoute(emptyList()),
+    var isOriginalRoute: Boolean = true,
+    var isAlert: Boolean = false,
+    var message: String = ""
 )
+
 
 @Serializable
 data class Position(

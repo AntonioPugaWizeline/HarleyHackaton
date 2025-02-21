@@ -44,11 +44,15 @@ class AndroidMapController(private val context: Context, private val mapFragment
                     Position(40.741895, -73.989308),
                     30_000L
                 ).collect { response ->
-                    if(!response.isOriginalRoute){
-                        showToast("Route has changed")
+                    if(!response.isAlert){
+                        if(!response.isOriginalRoute){
+                            showToast("Route has changed")
+                        }
+                        val coordinates: List<Pair<Double, Double>> = buildCoordinateList(response)
+                        drawRoute(coordinates)
+                    }else{
+                        showToast(response.message)
                     }
-                    val coordinates: List<Pair<Double, Double>> = buildCoordinateList(response)
-                    drawRoute(coordinates)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
