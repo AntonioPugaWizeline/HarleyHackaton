@@ -42,7 +42,7 @@ class AndroidMapController(private val context: Context, private val mapFragment
                     "http://10.0.2.2:3000/route",
                     Position(40.730610, -75.935242),
                     Position(40.741895, -73.989308),
-                    30_000L
+                    10_000L
                 ).collect { response ->
                     if(!response.isAlert){
                         if(!response.isOriginalRoute){

@@ -25,7 +25,6 @@ fun subscribeToService(apiUrl: String, start: Position, end: Position, intervalM
     delay(intervalMillis)
     emit(RouteResponse(message = "Weather alert! Rain is expected in the next 40 miles.", isAlert = true))
     delay(intervalMillis)
-    emit(RouteResponse())
     emit(RouteResponse(message = "Caution! there is a car accident in 2 miles", isAlert = true))
     delay(intervalMillis)
 
