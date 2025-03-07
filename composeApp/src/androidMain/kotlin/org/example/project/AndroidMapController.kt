@@ -42,7 +42,7 @@ class AndroidMapController(private val context: Context, private val mapFragment
 
         // Set an initial camera position (this example zooms out to show a larger area)
         val initialLocation = LatLng(initialPosition.latitude, initialPosition.longitude) // Example: San Francisco
-        googleMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(initialLocation, 10f))
+        googleMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(initialLocation, 20f))
 
         mapFragment.lifecycleScope.launch {
             try {

@@ -33,8 +33,10 @@ fun MapFragmentScreen(
 
     if(selectedCard == null){
         val rideItems = listOf(
-            RideItem(icon = Icons.Filled.FilterHdr, title = "Yosemite National Parl", description = "Camping route, climbing and mountain adventures.", Position(40.730610, -75.935242), Position(40.741895, -73.989308)),
-            RideItem(icon = Icons.Filled.Surfing, title = "San Diego, County", description = "Surfing route from beach of florida to san diego.", Position(38.261520, -119.2639655), Position(37.859933, -119.5383381)),
+            RideItem(icon = Icons.Filled.FilterHdr, title = "SOUTH MOUNTAIN RESERVATION", description = "Camping route, climbing and mountain adventures.",
+                     Position(40.7349075, -74.0073527), Position(40.7414455, -74.2933364), Position(40.7492999, -74.2913028)),
+            RideItem(icon = Icons.Filled.Surfing, title = "MANHATTAN BEACH", description = "Surfing route from beach of florida to san diego.",
+                     Position(40.7349075, -74.0073527), Position(40.5786937, -73.9532876)),
         )
         LazyColumn(modifier = Modifier.padding(16.dp)) {
             item {
