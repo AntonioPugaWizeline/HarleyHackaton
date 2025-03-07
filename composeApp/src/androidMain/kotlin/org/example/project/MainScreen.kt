@@ -23,6 +23,7 @@ import com.example.project.MapFragmentScreen
 fun MainScreen() {
     var selectedIndex by remember { mutableStateOf(0) }
     val items = listOf("Home", "Connect", "Route", "More")
+    val viewModel: SearchViewModel = SearchViewModel()
 
     Scaffold(
         bottomBar = {
@@ -62,7 +63,7 @@ fun MainScreen() {
             when (selectedIndex) {
                 0 -> HomeScreen()
                 1 -> Text("Connect Screen")
-                2 -> MapFragmentScreen()
+                2 -> MapFragmentScreen( viewModel = viewModel)
                 3 -> BikeStatusScreen()
             }
         }

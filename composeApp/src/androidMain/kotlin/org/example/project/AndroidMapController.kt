@@ -16,8 +16,16 @@ class AndroidMapController(private val context: Context, private val mapFragment
 
     private var googleMap: GoogleMap? = null
     private var currentPolyline: Polyline? = null
+    private lateinit var coordinates: List<Pair<Double, Double>>
+    private val markerList = mutableListOf<Marker>()
+    private lateinit var initialPosition: Position
+    private lateinit var finalPosition: Position
+    private var changeFinalPosition: Position? = null
 
-    override fun initializeMap() {
+    override fun initializeMap(initialPosition: Position, finalPosition: Position, changeFinalPosition: Position?) {
+        this.initialPosition = initialPosition
+        this.finalPosition = finalPosition
+        this.changeFinalPosition = changeFinalPosition
         mapFragment.getMapAsync(this)
     }
 
@@ -33,22 +41,23 @@ class AndroidMapController(private val context: Context, private val mapFragment
         }
 
         // Set an initial camera position (this example zooms out to show a larger area)
-        val initialLocation = LatLng(40.730610, -75.935242) // Example: San Francisco
+        val initialLocation = LatLng(initialPosition.latitude, initialPosition.longitude) // Example: San Francisco
         googleMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(initialLocation, 10f))
 
         mapFragment.lifecycleScope.launch {
             try {
                 subscribeToService(
                     "http://10.0.2.2:3000/route",
-                    Position(40.730610, -75.935242),
-                    Position(40.741895, -73.989308),
+                    initialPosition,
+                    finalPosition,
+                    changeFinalPosition,
                     10_000L
                 ).collect { response ->
                     if(!response.isAlert){
                         if(!response.isOriginalRoute){
                             showToast("Route has changed")
                         }
-                        val coordinates: List<Pair<Double, Double>> = buildCoordinateList(response)
+                        coordinates = buildCoordinateList(response)
                         drawRoute(coordinates)
                     }else{
                         showToast(response.message)
@@ -63,7 +72,8 @@ class AndroidMapController(private val context: Context, private val mapFragment
     }
 
     override fun addMarker(latitude: Double, longitude: Double, title: String) {
-        googleMap?.addMarker(MarkerOptions().position(LatLng(latitude, longitude)).title(title))
+        val marker = googleMap?.addMarker(MarkerOptions().position(LatLng(latitude, longitude)).title(title))
+        marker?.let { markerList.add(it) }
     }
 
     override fun drawRoute(points: List<Pair<Double, Double>>) {
@@ -119,6 +129,18 @@ class AndroidMapController(private val context: Context, private val mapFragment
         return coordinateList
     }
 
+    override fun searchQuery(query: String) {
+        removeAllMarkers()
+        val randomCoordinates = coordinates.shuffled().take(3)
+        for (coordinate in randomCoordinates){
+            addMarker(coordinate.first, coordinate.second, query)
+        }
+    }
 
-
+    override fun removeAllMarkers() {
+        for(marker in markerList){
+            marker.remove()
+        }
+        markerList.clear()
+    }
 }
